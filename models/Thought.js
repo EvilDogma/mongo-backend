@@ -1,10 +1,10 @@
-const { model, Schema } = require('mongoose')
+const { ObjectId } = require('bson')
+const { model, Schema, Types } = require('mongoose')
 
 const reactionSchema = new Schema({
     reactionId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        required: true, 
-        auto: true 
+        type: Schema.Types.ObjectId, 
+        default: ()=>new Types.ObjectId()
     },
     reactionBody: {
         type: String,
@@ -17,11 +17,10 @@ const reactionSchema = new Schema({
       default: Date.now
     },
     username: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: true
     }
-  })
+  }, { _id: false })
 
 const thoughtSchema = new Schema({
     thoughtText: {
@@ -34,11 +33,15 @@ const thoughtSchema = new Schema({
       type: Date,
       default: Date.now
     },
-    username: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
+    username: {
+        type: String,
+        required: true
+      },
     reactions: [reactionSchema] 
 
 
@@ -52,7 +55,7 @@ thoughtSchema.virtual('reactionCount').get(function () {
 
 thoughtSchema.set('toJSON', { virtuals: true });
 
-const Thought = model('Thought', thoughtsSchema)
+const Thought = model('Thought', thoughtSchema)
 
 
 module.exports = Thought

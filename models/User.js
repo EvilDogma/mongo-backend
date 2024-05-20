@@ -2,7 +2,7 @@ const { model, Schema } = require('mongoose')
 const { hash, compare } = require('bcrypt')
 
 function validateEmail(email) {
-    return value.test(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
 }
 const userSchema = new Schema({
     username: {

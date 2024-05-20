@@ -18,12 +18,9 @@ app.use(session({
     // cookie: { secure: true }
   }))
 
-const viewroutes = require('./routes/view-routes')
 const authroutes = require('./routes/auth-routes')
 
-app.use('/',[viewroutes])
-
-app.use('/api/auth',[authroutes])
+app.use('/api',[authroutes])
 
 db.connection.once('open', ()=>{
     console.log('DB Connected')
